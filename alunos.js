@@ -1,20 +1,52 @@
-const alunos = [
-  { nome: 'Ana', nota: 8.5 },
-  { nome: 'Bruno', nota: 5.0 },
-  { nome: 'Carlos', nota: 7.2 },
-  { nome: 'Diana', nota: 4.8 },
-  { nome: 'Eduardo', nota: 6.0 },
-  { nome: 'Fernanda', nota: 9.1 },
-  { nome: 'Gabriel', nota: 3.5 },
-];
+class Aluno {
+  constructor(nome, nota) {
+    this.nome = nome;
+    this.nota = nota;
+  }
 
-const filtrarAprovados = (listaAlunos) =>
-  listaAlunos.filter(({ nota }) => nota >= 6);
+  aprovado() {
+    return this.nota >= 6;
+  }
 
-const aprovados = filtrarAprovados(alunos);
+  toString() {
+    const status = this.aprovado() ? 'Aprovado' : 'Reprovado';
+    return `${this.nome}: ${this.nota} (${status})`;
+  }
+}
 
-console.log('=== Todos os alunos ===');
-alunos.forEach(({ nome, nota }) => console.log(`${nome}: ${nota}`));
+class Turma {
+  constructor() {
+    this.alunos = [];
+  }
 
-console.log('\n=== Aprovados (nota >= 6) ===');
-aprovados.forEach(({ nome, nota }) => console.log(`${nome}: ${nota}`));
+  adicionarAluno(aluno) {
+    this.alunos.push(aluno);
+  }
+
+  filtrarAprovados() {
+    return this.alunos.filter((aluno) => aluno.aprovado());
+  }
+
+  exibirTodos() {
+    console.log('=== Todos os alunos ===');
+    this.alunos.forEach((aluno) => console.log(aluno.toString()));
+  }
+
+  exibirAprovados() {
+    console.log('\n=== Aprovados (nota >= 6) ===');
+    this.filtrarAprovados().forEach((aluno) => console.log(aluno.toString()));
+  }
+}
+
+const turma = new Turma();
+
+turma.adicionarAluno(new Aluno('Ana', 8.5));
+turma.adicionarAluno(new Aluno('Bruno', 5.0));
+turma.adicionarAluno(new Aluno('Carlos', 7.2));
+turma.adicionarAluno(new Aluno('Diana', 4.8));
+turma.adicionarAluno(new Aluno('Eduardo', 6.0));
+turma.adicionarAluno(new Aluno('Fernanda', 9.1));
+turma.adicionarAluno(new Aluno('Gabriel', 3.5));
+
+turma.exibirTodos();
+turma.exibirAprovados();
